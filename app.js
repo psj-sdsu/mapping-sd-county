@@ -10,7 +10,6 @@ document.addEventListener("DOMContentLoaded", () => {
      CONFIG
      ========================================================= */
 
-  // Make sure this CSV is inside your website's /data folder
   const RESTROOM_CSV_URL =
     "data/restrooms_baseline_public_merged_2026-08-11.csv";
 
@@ -124,7 +123,6 @@ document.addEventListener("DOMContentLoaded", () => {
      ========================================================= */
 
   async function loadCsv(url) {
-
     const response = await fetch(url);
 
     if (!response.ok) {
@@ -157,17 +155,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
   function getRestroomStatus(row) {
 
-    /*
-      Some records may use:
-        restroom_open_status
-
-      Newer records may use:
-        open_when_visited
-
-      If open_when_visited contains something,
-      use that first.
-    */
-
     let rawStatus;
 
     if (hasValue(row.open_when_visited)) {
@@ -192,7 +179,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
   function getStatusLabel(row) {
-
     const status = getRestroomStatus(row);
 
     if (status === "open") {
@@ -208,20 +194,16 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
   function getStatusColor(row) {
-
     const status = getRestroomStatus(row);
 
-    // BLUE
     if (status === "open") {
       return "#2563eb";
     }
 
-    // RED
     if (status === "closed") {
       return "#dc2626";
     }
 
-    // GRAY
     return "#808080";
   }
 
@@ -297,22 +279,6 @@ document.addEventListener("DOMContentLoaded", () => {
       yesNo(row.baby_changing);
 
 
-    const notes =
-      valueOf(row.notes);
-
-
-    const accessBarriers =
-      valueOf(row.access_barriers);
-
-
-    const impressions =
-      valueOf(row.overall_impressions);
-
-
-    const outsideContext =
-      valueOf(row.outside_context);
-
-
     const assessmentDate =
       formatDate(
         row.audit_datetime ||
@@ -321,12 +287,7 @@ document.addEventListener("DOMContentLoaded", () => {
       );
 
 
-    /*
-      Helper for popup rows
-    */
-
     function rowHtml(label, value) {
-
       if (!hasValue(value)) {
         return "";
       }
@@ -339,10 +300,6 @@ document.addEventListener("DOMContentLoaded", () => {
       `;
     }
 
-
-    /*
-      Google Maps link
-    */
 
     let googleMapsLink = "";
 
@@ -454,23 +411,6 @@ document.addEventListener("DOMContentLoaded", () => {
             babyChanging
           )}
 
-          ${rowHtml(
-            "Access barriers",
-            accessBarriers
-          )}
-
-          /* ${rowHtml(
-            "Overall impressions",
-            impressions
-          )} */
-
-         /* ${rowHtml(
-            "Outside context",
-            outsideContext
-          )}*/
-
-          /*${rowHtml("Notes", notes)} */
-
         </div>
 
 
@@ -508,10 +448,6 @@ document.addEventListener("DOMContentLoaded", () => {
         parseFloat(row.longitude);
 
 
-      /*
-        Skip records without usable coordinates
-      */
-
       if (
         Number.isNaN(lat) ||
         Number.isNaN(lng)
@@ -547,22 +483,13 @@ document.addEventListener("DOMContentLoaded", () => {
         getStatusColor(row);
 
 
-      /*
-        Circle markers are easier to color than
-        Leaflet's standard pin markers.
-      */
-
       const marker = L.circleMarker(
         [lat, lng],
         {
           radius: 7,
-
           color: "#ffffff",
-
           weight: 2,
-
           fillColor: markerColor,
-
           fillOpacity: 0.9,
         }
       );
@@ -578,20 +505,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
       marker.addTo(restroomMarkers);
 
-
       bounds.push([lat, lng]);
 
       mappedCount++;
     });
 
 
-    /*
-      Automatically zoom so ALL mapped bathrooms
-      are visible.
-    */
-
     if (bounds.length > 0) {
-
       map.fitBounds(
         bounds,
         {
@@ -673,13 +593,7 @@ document.addEventListener("DOMContentLoaded", () => {
     `;
 
 
-    /*
-      Prevent map interactions when
-      clicking the legend.
-    */
-
     L.DomEvent.disableClickPropagation(div);
-
 
     return div;
   };
@@ -714,11 +628,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
       drawMarkers(rows);
 
-
-      /*
-        Helps Leaflet display correctly
-        if the map container changes size.
-      */
 
       setTimeout(() => {
         map.invalidateSize();
