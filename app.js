@@ -102,7 +102,7 @@ document.addEventListener("DOMContentLoaded", () => {
   L.tileLayer(
     "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
     {
-      maxZoom: 30,
+      maxZoom: 20,
       attribution: "&copy; OpenStreetMap contributors",
     }
   ).addTo(map);
