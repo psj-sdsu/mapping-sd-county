@@ -1,1 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
 
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <title>San Diego County Public Restrooms</title>
+
+
+  <!-- Leaflet CSS -->
+  <link
+    rel="stylesheet"
+    href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+  >
+
+
+  <!-- Your CSS -->
+  <link
+    rel="stylesheet"
+    href="style.css"
+  >
+</head>
+
+
+<body>
+
+  <header class="siteHeader">
+    <h1>San Diego County Public Restrooms</h1>
+
+    <p>
+      Find public restroom locations throughout San Diego County.
+    </p>
+  </header>
+
+
+  <main>
+
+    <!-- Leaflet map goes here -->
+    <div id="map"></div>
+
+  </main>
+
+
+  <!-- Leaflet JavaScript -->
+  <script
+    src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js">
+  </script>
+
+
+  <!-- Papa Parse for reading the CSV -->
+  <script
+    src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js">
+  </script>
+
+
+  <!-- Your map code -->
+  <script src="app.js"></script>
+
+</body>
+</html>
