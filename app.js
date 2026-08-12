@@ -459,17 +459,17 @@ document.addEventListener("DOMContentLoaded", () => {
             accessBarriers
           )}
 
-          ${rowHtml(
+          /* ${rowHtml(
             "Overall impressions",
             impressions
-          )}
+          )} */
 
-          ${rowHtml(
+         /* ${rowHtml(
             "Outside context",
             outsideContext
-          )}
+          )}*/
 
-          ${rowHtml("Notes", notes)}
+          /*${rowHtml("Notes", notes)} */
 
         </div>
 
