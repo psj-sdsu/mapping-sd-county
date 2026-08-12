@@ -96,7 +96,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const map = L.map("map").setView(
     [32.9, -117.1],
-    10
+    20
   );
 
   L.tileLayer(
