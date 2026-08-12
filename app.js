@@ -28,16 +28,13 @@ document.addEventListener("DOMContentLoaded", () => {
     }[char]));
   }
 
-
   function valueOf(value) {
     return String(value ?? "").trim();
   }
 
-
   function hasValue(value) {
     return valueOf(value) !== "";
   }
-
 
   function isYes(value) {
     const v = valueOf(value).toLowerCase();
@@ -52,7 +49,6 @@ document.addEventListener("DOMContentLoaded", () => {
     ].includes(v);
   }
 
-
   function isNo(value) {
     const v = valueOf(value).toLowerCase();
 
@@ -66,7 +62,6 @@ document.addEventListener("DOMContentLoaded", () => {
     ].includes(v);
   }
 
-
   function yesNo(value) {
     if (!hasValue(value)) return "";
 
@@ -75,7 +70,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
     return valueOf(value);
   }
-
 
   function formatDate(value) {
     const raw = valueOf(value);
@@ -105,7 +99,6 @@ document.addEventListener("DOMContentLoaded", () => {
     10
   );
 
-
   L.tileLayer(
     "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
     {
@@ -113,7 +106,6 @@ document.addEventListener("DOMContentLoaded", () => {
       attribution: "&copy; OpenStreetMap contributors",
     }
   ).addTo(map);
-
 
   const restroomMarkers = L.layerGroup().addTo(map);
 
@@ -154,7 +146,6 @@ document.addEventListener("DOMContentLoaded", () => {
      ========================================================= */
 
   function getRestroomStatus(row) {
-
     let rawStatus;
 
     if (hasValue(row.open_when_visited)) {
@@ -163,20 +154,16 @@ document.addEventListener("DOMContentLoaded", () => {
       rawStatus = row.restroom_open_status;
     }
 
-
     if (isYes(rawStatus)) {
       return "open";
     }
-
 
     if (isNo(rawStatus)) {
       return "closed";
     }
 
-
     return "unknown";
   }
-
 
   function getStatusLabel(row) {
     const status = getRestroomStatus(row);
@@ -191,7 +178,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
     return "Unknown";
   }
-
 
   function getStatusColor(row) {
     const status = getRestroomStatus(row);
@@ -219,42 +205,32 @@ document.addEventListener("DOMContentLoaded", () => {
       valueOf(row.name) ||
       "Public Restroom";
 
-
     const address =
       valueOf(row.address);
-
 
     const status =
       getStatusLabel(row);
 
-
     const hours =
       valueOf(row.advertised_hours);
-
 
     const operatedBy =
       valueOf(row.operated_by);
 
-
     const accessMethod =
       valueOf(row.access_method);
-
 
     const findability =
       valueOf(row.findability);
 
-
     const ada =
       yesNo(row.ada_accessible);
-
 
     const genderNeutral =
       yesNo(row.gender_neutral);
 
-
     const menstrualProducts =
       yesNo(row.menstrual_products);
-
 
     const showers =
       yesNo(
@@ -262,22 +238,17 @@ document.addEventListener("DOMContentLoaded", () => {
         row.showers
       );
 
-
     const water =
       yesNo(row.water_refill_nearby);
-
 
     const signage =
       yesNo(row.visible_signage);
 
-
     const cameras =
       yesNo(row.security_cameras);
 
-
     const babyChanging =
       yesNo(row.baby_changing);
-
 
     const assessmentDate =
       formatDate(
@@ -332,18 +303,15 @@ document.addEventListener("DOMContentLoaded", () => {
           ${esc(name)}
         </div>
 
-
         ${
           address
             ? `<div class="popupAddress">${esc(address)}</div>`
             : ""
         }
 
-
         <div class="popupStatus popupStatus-${getRestroomStatus(row)}">
           ${esc(status)}
         </div>
-
 
         ${
           hours
@@ -356,7 +324,6 @@ document.addEventListener("DOMContentLoaded", () => {
             : ""
         }
 
-
         ${
           assessmentDate
             ? `
@@ -367,7 +334,6 @@ document.addEventListener("DOMContentLoaded", () => {
             `
             : ""
         }
-
 
         <div class="popupDetails">
 
@@ -413,7 +379,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
         </div>
 
-
         ${googleMapsLink}
 
       </div>
@@ -438,7 +403,6 @@ document.addEventListener("DOMContentLoaded", () => {
     let closedCount = 0;
     let unknownCount = 0;
 
-
     rows.forEach((row) => {
 
       const lat =
@@ -446,7 +410,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
       const lng =
         parseFloat(row.longitude);
-
 
       if (
         Number.isNaN(lat) ||
@@ -465,10 +428,8 @@ document.addEventListener("DOMContentLoaded", () => {
         return;
       }
 
-
       const status =
         getRestroomStatus(row);
-
 
       if (status === "open") {
         openCount++;
@@ -478,10 +439,8 @@ document.addEventListener("DOMContentLoaded", () => {
         unknownCount++;
       }
 
-
       const markerColor =
         getStatusColor(row);
-
 
       const marker = L.circleMarker(
         [lat, lng],
@@ -494,7 +453,6 @@ document.addEventListener("DOMContentLoaded", () => {
         }
       );
 
-
       marker.bindPopup(
         popupHtml(row),
         {
@@ -502,14 +460,12 @@ document.addEventListener("DOMContentLoaded", () => {
         }
       );
 
-
       marker.addTo(restroomMarkers);
 
       bounds.push([lat, lng]);
 
       mappedCount++;
     });
-
 
     if (bounds.length > 0) {
       map.fitBounds(
@@ -519,7 +475,6 @@ document.addEventListener("DOMContentLoaded", () => {
         }
       );
     }
-
 
     console.log(
       `Restrooms mapped: ${mappedCount}`
@@ -552,7 +507,6 @@ document.addEventListener("DOMContentLoaded", () => {
       position: "bottomright",
     });
 
-
   legend.onAdd = function () {
 
     const div =
@@ -560,7 +514,6 @@ document.addEventListener("DOMContentLoaded", () => {
         "div",
         "mapLegend"
       );
-
 
     div.innerHTML = `
       <div class="legendTitle">
@@ -592,12 +545,10 @@ document.addEventListener("DOMContentLoaded", () => {
       </div>
     `;
 
-
     L.DomEvent.disableClickPropagation(div);
 
     return div;
   };
-
 
   legend.addTo(map);
 
@@ -614,25 +565,20 @@ document.addEventListener("DOMContentLoaded", () => {
         "Loading restroom data..."
       );
 
-
       const rows =
         await loadCsv(
           RESTROOM_CSV_URL
         );
 
-
       console.log(
         `CSV records loaded: ${rows.length}`
       );
 
-
       drawMarkers(rows);
-
 
       setTimeout(() => {
         map.invalidateSize();
       }, 200);
-
 
     } catch (error) {
 
@@ -643,7 +589,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
     }
   }
-
 
   initializeMap();
 
