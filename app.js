@@ -96,13 +96,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const map = L.map("map").setView(
     [32.9, -117.1],
-    10
+    40
   );
 
   L.tileLayer(
     "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
     {
-      maxZoom: 10,
+      maxZoom: 19,
       attribution: "&copy; OpenStreetMap contributors",
     }
   ).addTo(map);
